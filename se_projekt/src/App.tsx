@@ -1,28 +1,41 @@
 import React, { useState } from 'react';
-
+let turn: boolean = true;
 function App() {
+  
   const [gamefield, setGamefield] = useState([
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
   ]);
 
   function addCoinCol(colIndex: number) {
     const newGamefield = [...gamefield];
     for (let i = gamefield.length - 1; i >= 0; i--) {
-      if (newGamefield[i][colIndex] === false) {
-        newGamefield[i][colIndex] = true;
-        break;
+      if (newGamefield[i][colIndex] === ' ') {
+        if(turn == true){
+          newGamefield[i][colIndex] = 'X'; // 'X' for player 1
+          turn = false;
+          break;
+        }
+        else{
+          newGamefield[i][colIndex] = 'O'; // 'O' for player 2
+          turn = true;
+          break;
+        }
+        
       }
+      
+    
     }
+    
     setGamefield(newGamefield);
   }
 
   return (
-    <div className="App">
+    <div id="center">
       <table>
         <tbody>
           {gamefield.map((row, rowIndex) => (
@@ -30,7 +43,7 @@ function App() {
               {row.map((cell, colIndex) => (
                 <td key={colIndex}>
                   <button onClick={() => addCoinCol(colIndex)}>
-                    {cell === false ? 'X' : 'O'}
+                    {cell}
                   </button>
                 </td>
               ))}
@@ -43,6 +56,52 @@ function App() {
 }
 
 export default App;
+
+// import React, { useState } from 'react';
+
+// function App() {
+//   const [gamefield, setGamefield] = useState([
+//     [false, false, false, false, false, false, false],
+//     [false, false, false, false, false, false, false],
+//     [false, false, false, false, false, false, false],
+//     [false, false, false, false, false, false, false],
+//     [false, false, false, false, false, false, false],
+//     [false, false, false, false, false, false, false],
+//   ]);
+
+//   function addCoinCol(colIndex: number) {
+//     const newGamefield = [...gamefield];
+//     for (let i = gamefield.length - 1; i >= 0; i--) {
+//       if (newGamefield[i][colIndex] === false) {
+//         newGamefield[i][colIndex] = true;
+//         break;
+//       }
+//     }
+//     setGamefield(newGamefield);
+//   }
+
+//   return (
+//     <div id="center">
+//       <table>
+//         <tbody>
+//           {gamefield.map((row, rowIndex) => (
+//             <tr key={rowIndex}>
+//               {row.map((cell, colIndex) => (
+//                 <td key={colIndex}>
+//                   <button onClick={() => addCoinCol(colIndex)}>
+//                     {cell === false ? 'X' : 'O'}
+//                   </button>
+//                 </td>
+//               ))}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// }
+
+// export default App;
 
 // import React, { useState } from 'react';
 
@@ -189,3 +248,4 @@ export default App;
 // }
 
 // export default App;
+
