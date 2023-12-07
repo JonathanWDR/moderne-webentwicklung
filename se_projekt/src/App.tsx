@@ -55,7 +55,6 @@ function App() {
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
   ]);
 
-  // SINGH
 
   function addCoinCol(colIndex: number) {
     const newGamefield = [...gamefield];
@@ -88,23 +87,23 @@ function App() {
   }
 
   return (
-    <div id="center">
-      <table>
-        <tbody>
-          {gamefield.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, colIndex) => (
-                <td key={colIndex}>
-                  <button onClick={() => addCoinCol(colIndex)}>
-                    {cell}
-                  </button>
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    // <div id="center">
+    //   <table>
+    //     <tbody>
+    //       {gamefield.map((row, rowIndex) => (
+    //         <tr key={rowIndex}>
+    //           {row.map((cell, colIndex) => (
+    //             <td key={colIndex}>
+    //               <button onClick={() => addCoinCol(colIndex)}>
+    //                 {cell}
+    //               </button>
+    //             </td>
+    //           ))}
+    //         </tr>
+    //       ))}
+    //     </tbody>
+    //   </table>
+    // </div>
   );
 }
 export default App;
