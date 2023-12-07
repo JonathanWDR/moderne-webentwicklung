@@ -18,10 +18,16 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 let turn: boolean = true;
 let winnerstatus = false;
+
+function checkWinner(gamefield: any): void {
+  checkRows(gamefield);
+  checkColumns(gamefield);
+  checkDiagonals(gamefield);
+}
 
 function checkRows(gamefield: any): void {
   for (let row = 0; row < gamefield.length; row++) {
@@ -115,7 +121,7 @@ function App() {
     //     </tbody>
     //   </table>
     // </div>
-        <ThemeProvider theme={defaultTheme}>
+       
           <Box component="main" sx={{ display: 'flex' }}>
             <Grid container spacing={3}>
             <Paper
@@ -132,7 +138,6 @@ function App() {
               </Paper>
             </Grid>
           </Box>
-        </ThemeProvider>
   );
 }
 export default App;
