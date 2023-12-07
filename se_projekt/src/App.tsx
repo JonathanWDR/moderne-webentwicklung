@@ -1,5 +1,49 @@
 import React, { useState } from 'react';
 let turn: boolean = true;
+let winnerstatus = false;
+
+function checkRows(gamefield: any): void {
+  for (let row = 0; row < gamefield.length; row++) {
+    for (let col = 0; col <= gamefield[row].length - 4; col++) {
+      const symbol = gamefield[row][col];
+      if (symbol == 'X' && gamefield[row][col + 1] === symbol && gamefield[row][col + 2] === symbol && gamefield[row][col + 3] === symbol) {
+        winnerstatus = true; // Gewinner in der Reihe gefunden
+        return;
+      }
+    }
+  }
+}
+
+function checkColumns(gamefield: any): void {
+  for (let col = 0; col < gamefield[0].length; col++) {
+    for (let row = 0; row <= gamefield.length - 4; row++) {
+      const symbol = gamefield[row][col];
+      if (symbol == 'X' && gamefield[row + 1][col] === symbol && gamefield[row + 2][col] === symbol && gamefield[row + 3][col] === symbol) {
+        winnerstatus = true; // Gewinner in der Spalte gefunden
+        return;
+      }
+    }
+  }
+}
+
+function checkDiagonals(gamefield: any): void {
+  for (let row = 0; row <= gamefield.length - 4; row++) {
+    for (let col = 0; col <= gamefield[row].length - 4; col++) {
+      const symbol = gamefield[row][col];
+      // Diagonale von links oben nach rechts unten \
+      if (symbol == 'X' && gamefield[row + 1][col + 1] === symbol && gamefield[row + 2][col + 2] === symbol && gamefield[row + 3][col + 3] === symbol) {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+      // Diagonale von rechts oben nach links unten /
+      if (symbol == 'X' && gamefield[row + 1][col + 3] === symbol && gamefield[row + 2][col + 2] === symbol && gamefield[row + 3][col + 1] === symbol) {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+    }
+  }
+}
+
 function App() {
   
   const [gamefield, setGamefield] = useState([
@@ -11,11 +55,13 @@ function App() {
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
   ]);
 
+  // SINGH
+
   function addCoinCol(colIndex: number) {
     const newGamefield = [...gamefield];
     for (let i = gamefield.length - 1; i >= 0; i--) {
       if (newGamefield[i][colIndex] === ' ') {
-        if(turn == true){
+        if(turn === true){
           newGamefield[i][colIndex] = 'X'; // 'X' for player 1
           turn = false;
           break;
@@ -32,6 +78,13 @@ function App() {
     }
     
     setGamefield(newGamefield);
+
+    function checkWinner(gamefield: any): void {
+      checkRows(gamefield);
+      checkColumns(gamefield);
+      checkDiagonals(gamefield);
+    }
+    console.log(winnerstatus);
   }
 
   return (
@@ -54,7 +107,6 @@ function App() {
     </div>
   );
 }
-
 export default App;
 
 // import React, { useState } from 'react';
