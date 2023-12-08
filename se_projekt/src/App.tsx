@@ -20,16 +20,32 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
 let turn: boolean = true;
 let winnerstatus = false;
 
 function checkWinner(gamefield: any): void {
-  checkRows(gamefield);
-  checkColumns(gamefield);
-  checkDiagonals(gamefield);
+  if(turn === false){
+  checkRowsX(gamefield);
+  checkColumnsX(gamefield);
+  checkDiagonalsX(gamefield);
+  }
+  else{
+    checkRowsO(gamefield);
+    checkColumnsO(gamefield);
+    checkDiagonalsO(gamefield);
+  }
+  if(winnerstatus === true){
+    if(turn === true){
+      console.log("O hat gewonnen");
+    }
+    else{
+      console.log("X hat gewonnen");
+    }
+  }
 }
 
-function checkRows(gamefield: any): void {
+function checkRowsX(gamefield: any): void {
   for (let row = 0; row < gamefield.length; row++) {
     for (let col = 0; col <= gamefield[row].length - 4; col++) {
       const symbol = gamefield[row][col];
@@ -41,7 +57,19 @@ function checkRows(gamefield: any): void {
   }
 }
 
-function checkColumns(gamefield: any): void {
+function checkRowsO(gamefield: any): void {
+  for (let row = 0; row < gamefield.length; row++) {
+    for (let col = 0; col <= gamefield[row].length - 4; col++) {
+      const symbol = gamefield[row][col];
+      if (symbol === 'O' && gamefield[row][col + 1] === symbol && gamefield[row][col + 2] === symbol && gamefield[row][col + 3] === symbol) {
+        winnerstatus = true; // Gewinner in der Reihe gefunden
+        return;
+      }
+    }
+  }
+}
+
+function checkColumnsX(gamefield: any): void {
   for (let col = 0; col < gamefield[0].length; col++) {
     for (let row = 0; row <= gamefield.length - 4; row++) {
       const symbol = gamefield[row][col];
@@ -53,17 +81,50 @@ function checkColumns(gamefield: any): void {
   }
 }
 
-function checkDiagonals(gamefield: any): void {
-  for (let row = 0; row <= gamefield.length - 4; row++) {
-    for (let col = 0; col <= gamefield[row].length - 4; col++) {
+function checkColumnsO(gamefield: any): void {
+  for (let col = 0; col < gamefield[0].length; col++) {
+    for (let row = 0; row <= gamefield.length - 4; row++) {
       const symbol = gamefield[row][col];
+      if (symbol === 'O' && gamefield[row + 1][col] === symbol && gamefield[row + 2][col] === symbol && gamefield[row + 3][col] === symbol) {
+        winnerstatus = true; // Gewinner in der Spalte gefunden
+        return;
+      }
+    }
+  }
+}
+
+function checkDiagonalsX(gamefield: any): void {
+  const rows = gamefield.length;
+  const cols = gamefield[0].length;
+
+  for (let row = 3; row < rows; row++) {
+    for (let col = 0; col <= cols - 4; col++) {
+      const symbol = gamefield[row][col];
+
       // Diagonale von links oben nach rechts unten \
-      if (symbol === 'X' && gamefield[row + 1][col + 1] === symbol && gamefield[row + 2][col + 2] === symbol && gamefield[row + 3][col + 3] === symbol) {
+      if (symbol === 'X' && gamefield[row - 1][col + 1] === 'X' && gamefield[row - 2][col + 2] === 'X' && gamefield[row - 3][col + 3] === 'X') {
         winnerstatus = true; // Gewinner in der Diagonale gefunden
         return;
       }
+
       // Diagonale von rechts oben nach links unten /
-      if (symbol === 'X' && gamefield[row + 1][col + 3] === symbol && gamefield[row + 2][col + 2] === symbol && gamefield[row + 3][col + 1] === symbol) {
+      if (col < cols - 3 && symbol === 'X' && gamefield[row - 1][col + 1] === 'X' && gamefield[row - 2][col + 2] === 'X' && gamefield[row - 3][col + 3] === 'X') {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+    }
+
+    for (let col = 3; col < cols; col++) {
+      const symbol = gamefield[row][col];
+
+      // Diagonale von rechts unten nach links oben /
+      if (symbol === 'X' && gamefield[row - 1][col - 1] === 'X' && gamefield[row - 2][col - 2] === 'X' && gamefield[row - 3][col - 3] === 'X') {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+
+      // Diagonale von links unten nach rechts oben \
+      if (symbol === 'X' && gamefield[row - 1][col] === 'X' && gamefield[row - 2][col + 1] === 'X' && gamefield[row - 3][col + 2] === 'X') {
         winnerstatus = true; // Gewinner in der Diagonale gefunden
         return;
       }
@@ -71,8 +132,50 @@ function checkDiagonals(gamefield: any): void {
   }
 }
 
+function checkDiagonalsO(gamefield: any): void {
+  const rows = gamefield.length;
+  const cols = gamefield[0].length;
+
+  for (let row = 3; row < rows; row++) {
+    for (let col = 0; col <= cols - 4; col++) {
+      const symbol = gamefield[row][col];
+
+      // Diagonale von links oben nach rechts unten \
+      if (symbol === 'O' && gamefield[row - 1][col + 1] === 'O' && gamefield[row - 2][col + 2] === 'O' && gamefield[row - 3][col + 3] === 'O') {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+
+      // Diagonale von rechts oben nach links unten /
+      if (col < cols - 3 && symbol === 'O' && gamefield[row - 1][col + 1] === 'O' && gamefield[row - 2][col + 2] === 'O' && gamefield[row - 3][col + 3] === 'O') {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+    }
+
+    for (let col = 3; col < cols; col++) {
+      const symbol = gamefield[row][col];
+
+      // Diagonale von rechts unten nach links oben /
+      if (symbol === 'O' && gamefield[row - 1][col - 1] === 'O' && gamefield[row - 2][col - 2] === 'O' && gamefield[row - 3][col - 3] === 'O') {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+
+      // Diagonale von links unten nach rechts oben \
+      if (symbol === 'O' && gamefield[row - 1][col] === 'O' && gamefield[row - 2][col + 1] === 'O' && gamefield[row - 3][col + 2] === 'O') {
+        winnerstatus = true; // Gewinner in der Diagonale gefunden
+        return;
+      }
+    }
+  }
+}
+
+
+
+
+
 function App() {
-  
   const [gamefield, setGamefield] = useState([
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -81,7 +184,6 @@ function App() {
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
   ]);
-
 
   function addCoinCol(colIndex: number) {
     const newGamefield = [...gamefield];
@@ -104,42 +206,26 @@ function App() {
   }
 
   return (
-    // <div id="center">
-    //   <table>
-    //     <tbody>
-    //       {gamefield.map((row, rowIndex) => (
-    //         <tr key={rowIndex}>
-    //           {row.map((cell, colIndex) => (
-    //             <td key={colIndex}>
-    //               <button onClick={() => addCoinCol(colIndex)}>
-    //                 {cell}
-    //               </button>
-    //             </td>
-    //           ))}
-    //         </tr>
-    //       ))}
-    //     </tbody>
-    //   </table>
-    // </div>
-       
-          <Box component="main" sx={{ display: 'flex' }}>
-            <Grid container spacing={3}>
-            <Paper
-                sx={{
-                  p: 2,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: 240,
-                }}
-              >
-                <IconButton aria-label="delete">
-                <DeleteIcon />
-                </IconButton>
-              </Paper>
-            </Grid>
-          </Box>
+    <div id="center">
+      <table>
+        <tbody>
+          {gamefield.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, colIndex) => (
+                <td key={colIndex}>
+                  <button onClick={() => addCoinCol(colIndex)}>
+                    {cell}
+                  </button>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
+
 export default App;
 
 // import React, { useState } from 'react';
