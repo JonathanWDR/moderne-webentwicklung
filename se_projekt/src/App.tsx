@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
+import { AppBar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography } from '@mui/material';
 
 let turn: boolean = true;
 let winnerstatus = false;
@@ -162,6 +163,8 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+const defaultTheme = createTheme();
+
 function App() {
   const [gamefield, setGamefield] = useState([
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -221,26 +224,92 @@ function App() {
       </table>
     </div> */
 
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={2}>
-        {gamefield.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, colIndex) => (
-              <td key={colIndex}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => addCoinCol(colIndex)}
-                  style={buttonStyle}
-                >
-                  {cell}
-                </Button>
-              </td>
-            ))}
-          </tr>
-        ))}
-      </Grid>
-    </Box>
+    <ThemeProvider theme={defaultTheme}>
+      <AppBar position="relative">
+        <Toolbar>
+          <Typography variant="h6" color="inherit" noWrap>
+            4 Gewinnt von Idioten
+          </Typography>
+        </Toolbar>
+      </AppBar>
+
+      <Box /*component="section" /*sx={{ flexGrow: 1 }} alignSelf="center" justifyContent="center" direction="column"*/display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+        bgcolor="#292d2e"
+      >
+        <Grid>
+          {gamefield.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, colIndex) => (
+                <td key={colIndex}>
+                  {rowIndex == 0 ? 
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => addCoinCol(colIndex)}
+                    style={buttonStyle}
+                  >
+                    {cell}
+                  </Button> : <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => addCoinCol(colIndex)}
+                      disabled
+                      style={buttonStyle}
+                    >
+                      {cell}
+                    </Button>}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </Grid>
+
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={() => {
+            setGamefield([
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+            ]);
+          }}
+          style={buttonStyle}
+        >
+          Reset
+        </Button>
+      </Box>
+    </ThemeProvider>
+
+      /* <TableContainer
+        component={Paper}
+        variant="outlined"
+      >
+        <Table aria-label="demo table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Dessert</TableCell>
+              <TableCell>Calories</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableCell>Frozen yoghurt</TableCell>
+              <TableCell>109</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Cupcake</TableCell>
+              <TableCell>305</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer> */
   );
 }
 
