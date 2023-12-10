@@ -10,6 +10,8 @@ import { AppBar, Table, TableBody, TableCell, TableContainer, TableHead, TableRo
 let turn: boolean = true;
 let winnerstatus = false;
 
+
+
 function checkWinner(gamefield: any): void {
   if (turn === false) {
     checkRowsX(gamefield);
@@ -26,6 +28,7 @@ function checkWinner(gamefield: any): void {
     } else {
       alert("X hat gewonnen");
     }
+    
   }
 }
 
@@ -180,6 +183,17 @@ function App() {
     height: '40px', // Ändere die Höhe nach Bedarf
   };
 
+ function setGamefieldAndWinnerStatus() {
+    setGamefield([
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+    [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+  ]);
+  winnerstatus = false;
+}
   function addCoinCol(colIndex: number) {
     const newGamefield = [...gamefield];
     for (let i = gamefield.length - 1; i >= 0; i--) {
@@ -197,7 +211,19 @@ function App() {
     }
     setGamefield(newGamefield);
     checkWinner(newGamefield);
+    if (winnerstatus === true) {
+      if (turn === true) {
+        alert("O hat gewonnen");
+      } else {
+        alert("X hat gewonnen");
+      }
+      setTimeout(() => {
+        setGamefieldAndWinnerStatus();
+      }, 5000);
+    }
     console.log(winnerstatus);
+
+   
   }
 
   return (
@@ -270,16 +296,7 @@ function App() {
         <Button
           color="secondary"
           variant="contained"
-          onClick={() => {
-            setGamefield([
-              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-              [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            ]);
-          }}
+          onClick={() => setGamefieldAndWinnerStatus()}
           style={buttonStyle}
         >
           Reset
