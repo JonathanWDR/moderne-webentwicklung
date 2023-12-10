@@ -1,46 +1,25 @@
 import React, { useState } from 'react';
-
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import DeleteIcon from '@mui/icons-material/Delete';
-
+import Button from '@mui/material/Button';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 let turn: boolean = true;
 let winnerstatus = false;
 
 function checkWinner(gamefield: any): void {
-  if(turn === false){
-  checkRowsX(gamefield);
-  checkColumnsX(gamefield);
-  checkDiagonalsX(gamefield);
-  }
-  else{
+  if (turn === false) {
+    checkRowsX(gamefield);
+    checkColumnsX(gamefield);
+    checkDiagonalsX(gamefield);
+  } else {
     checkRowsO(gamefield);
     checkColumnsO(gamefield);
     checkDiagonalsO(gamefield);
   }
-  if(winnerstatus === true){
-    if(turn === true){
-      console.log("O hat gewonnen");
-    }
-    else{
-      console.log("X hat gewonnen");
+  if (winnerstatus === true) {
+    if (turn === true) {
+      alert("O hat gewonnen");
+    } else {
+      alert("X hat gewonnen");
     }
   }
 }
@@ -171,10 +150,6 @@ function checkDiagonalsO(gamefield: any): void {
   }
 }
 
-
-
-
-
 function App() {
   const [gamefield, setGamefield] = useState([
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
@@ -184,6 +159,11 @@ function App() {
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
     [' ', ' ', ' ', ' ', ' ', ' ', ' '],
   ]);
+
+  const buttonStyle = {
+    width: '40px', // Ändere die Breite nach Bedarf
+    height: '40px', // Ändere die Höhe nach Bedarf
+  };
 
   function addCoinCol(colIndex: number) {
     const newGamefield = [...gamefield];
@@ -213,9 +193,14 @@ function App() {
             <tr key={rowIndex}>
               {row.map((cell, colIndex) => (
                 <td key={colIndex}>
-                  <button onClick={() => addCoinCol(colIndex)}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => addCoinCol(colIndex)}
+                    style={buttonStyle}
+                  >
                     {cell}
-                  </button>
+                  </Button>
                 </td>
               ))}
             </tr>
@@ -227,196 +212,3 @@ function App() {
 }
 
 export default App;
-
-// import React, { useState } from 'react';
-
-// function App() {
-//   const [gamefield, setGamefield] = useState([
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//   ]);
-
-//   function addCoinCol(colIndex: number) {
-//     const newGamefield = [...gamefield];
-//     for (let i = gamefield.length - 1; i >= 0; i--) {
-//       if (newGamefield[i][colIndex] === false) {
-//         newGamefield[i][colIndex] = true;
-//         break;
-//       }
-//     }
-//     setGamefield(newGamefield);
-//   }
-
-//   return (
-//     <div id="center">
-//       <table>
-//         <tbody>
-//           {gamefield.map((row, rowIndex) => (
-//             <tr key={rowIndex}>
-//               {row.map((cell, colIndex) => (
-//                 <td key={colIndex}>
-//                   <button onClick={() => addCoinCol(colIndex)}>
-//                     {cell === false ? 'X' : 'O'}
-//                   </button>
-//                 </td>
-//               ))}
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-// import React, { useState } from 'react';
-
-// function App() {
-//   const [gamefield, setGamefield] = useState([
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//   ]);
-
-//   function addCoinCol(colIndex: number) {
-//     for (let i = gamefield.length - 1; i >= 0; i--) {
-//       if (gamefield[i][colIndex] === false) {
-//         const newGamefield = [...gamefield];
-//         newGamefield[i][colIndex] = true;
-//         setGamefield(newGamefield);
-//         break;
-//       }
-//     }
-//   }
-
-//   return (
-//     <div className="App">
-//       <table>
-//         <thead>
-//           <tr>
-//             <th>
-//               <button onClick={() => addCoinCol(0)}>addCoinCol1</button>
-//             </th>
-//             <th>
-//               <button onClick={() => addCoinCol(1)}>addCoinCol2</button>
-//             </th>
-//             <th>
-//               <button onClick={() => addCoinCol(2)}>addCoinCol3</button>
-//             </th>
-//             <th>
-//               <button onClick={() => addCoinCol(3)}>addCoinCol4</button>
-//             </th>
-//             <th>
-//               <button onClick={() => addCoinCol(4)}>addCoinCol5</button>
-//             </th>
-//             <th>
-//               <button onClick={() => addCoinCol(5)}>addCoinCol6</button>
-//             </th>
-//             <th>
-//               <button onClick={() => addCoinCol(6)}>addCoinCol7</button>
-//             </th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {gamefield.map((row, rowIndex) => (
-//             <tr key={rowIndex}>
-//               {row.map((cell, colIndex) => (
-//                 <td key={colIndex}>{cell === false ? 'X' : 'O'}</td>
-//               ))}
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// import React, { useState } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-
-// function click() {
-//   console.log("Test");
-// }
-
-// function App() {
-//   const [gamefield, setGamefield] = useState([
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//     [false, false, false, false, false, false, false],
-//   ]);
-
-//   function addCoinCol(colIndex: number) {
-//     for (let i = gamefield.length - 1; i >= 0; i--) {
-//       if (gamefield[i][colIndex] == false) {
-//         const newGamefield = [...gamefield];
-//         newGamefield[i][colIndex] = true;
-//         setGamefield(newGamefield);
-//         break;
-//       }
-//     }
-//   }
-
-//   return (
-//     <div className="App">
-//      <table> 
-//       <td><button id='col1' onClick={() => addCoinCol(0)}>addCoinCol1</button></td>
-//       <td><button id='col2' onClick={() => addCoinCol(1)}>addCoinCol2</button></td>
-//       <td><button id='col3' onClick={() => addCoinCol(2)}>addCoinCol3</button></td>
-//       <td><button id='col4' onClick={() => addCoinCol(3)}>addCoinCol4</button></td>
-//       <td><button id='col5' onClick={() => addCoinCol(4)}>addCoinCol5</button></td>
-//       <td><button id='col6' onClick={() => addCoinCol(5)}>addCoinCol6</button></td>
-//       <td><button id='col7' onClick={() => addCoinCol(6)}>addCoinCol7</button></td>
-      
-//         {gamefield.map((row, rowIndex) => (
-//           <tr key={rowIndex}>
-//             {row.map((cell, cellIndex) => (
-//               <td key={cellIndex}>{String(cell)}</td>
-//             ))}
-//           </tr>
-//         ))}
-//       </table>
-//       <table>
-//         <td><button id='col1' onClick={() => addCoinCol(0)}>addCoinCol1</button></td>
-//         <td><button id='col2' onClick={() => addCoinCol(1)}>addCoinCol2</button></td>
-//         <td><button id='col3' onClick={() => addCoinCol(2)}>addCoinCol3</button></td>
-//         <td><button id='col4' onClick={() => addCoinCol(3)}>addCoinCol4</button></td>
-//         <td><button id='col5' onClick={() => addCoinCol(4)}>addCoinCol5</button></td>
-//         <td><button id='col6' onClick={() => addCoinCol(5)}>addCoinCol6</button></td>
-//         <td><button id='col7' onClick={() => addCoinCol(6)}>addCoinCol7</button></td>
-//         {gamefield.map((row, rowIndex) => (
-//           <tr key={rowIndex}>
-//             {row.map((cell, colIndex) => (
-//               <td key={colIndex}>
-//                 {cell === false ? (
-//                   'X'
-//                 ) : (
-//                   'O'
-//                 )}
-//               </td>
-//             ))}
-//           </tr>
-//         ))}
-//       </table>
-
-
-//     </div>
-//   );
-// }
-
-// export default App;
-
