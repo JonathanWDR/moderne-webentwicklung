@@ -166,7 +166,13 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const defaultTheme = createTheme();
+const schriftArt = 'Roboto, sans-serif';
+
+const defaultTheme = createTheme({
+  typography: {
+    fontFamily: schriftArt,
+  },
+});
 
 function App() {
   const [gamefield, setGamefield] = useState([
@@ -179,8 +185,13 @@ function App() {
   ]);
 
   const buttonStyle = {
-    width: '40px', // Ändere die Breite nach Bedarf
-    height: '40px', // Ändere die Höhe nach Bedarf
+    width: '80px', // Ändere die Breite nach Bedarf
+    height: '60px', // Ändere die Höhe nach Bedarf
+    backgroundColor: 'white',
+  };
+  const buttonStyle1 = {
+    width: '80px', // Ändere die Breite nach Bedarf
+    height: '60px', // Ändere die Höhe nach Bedarf
   };
 
  function setGamefieldAndWinnerStatus() {
@@ -250,14 +261,39 @@ function App() {
       </table>
     </div> */
 
-    <ThemeProvider theme={defaultTheme}>
-      <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            4 Gewinnt von Idioten
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <ThemeProvider theme={defaultTheme}>
+        <AppBar position="relative">
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap flex={1} style={{ fontFamily: schriftArt }}>
+              4 Gewinnt von Idioten
+            </Typography>
+
+            <Button
+                component="a" // 'a' für Anchor-Element
+                href="https://webdesign.thepic.de" // Ersetze dies durch die tatsächliche Website-URL
+                target="_blank" // Öffnet den Link in einem neuen Tab
+                rel="noopener noreferrer" // Empfohlene Sicherheitspraxis für externe Links
+                variant="text" // Du kannst 'contained' oder 'outlined' verwenden, je nach Bedarf
+                color="inherit" // Vererbt die Farbe von der umgebenden Komponente (AppBar)
+                style={{ marginRight: '20px', fontSize: '1.2rem', fontFamily: schriftArt}}
+            >
+              Home
+            </Button>
+
+            <Button
+                component="a" // 'a' für Anchor-Element
+                href="https://webdesign.thepic.de" // Ersetze dies durch die tatsächliche Website-URL
+                target="_blank" // Öffnet den Link in einem neuen Tab
+                rel="noopener noreferrer" // Empfohlene Sicherheitspraxis für externe Links
+                variant="text" // Du kannst 'contained' oder 'outlined' verwenden, je nach Bedarf
+                color="inherit" // Vererbt die Farbe von der umgebenden Komponente (AppBar)
+                style={{ marginRight: '20px', fontSize: '1.2rem', fontFamily: schriftArt}}
+            >
+              About us
+            </Button>
+
+          </Toolbar>
+        </AppBar>
 
       <Box /*component="section" /*sx={{ flexGrow: 1 }} alignSelf="center" justifyContent="center" direction="column"*/display="flex"
         justifyContent="center"
@@ -275,7 +311,7 @@ function App() {
                     variant="contained"
                     color="primary"
                     onClick={() => addCoinCol(colIndex)}
-                    style={buttonStyle}
+                    style={buttonStyle1}
                   >
                     {cell}
                   </Button> : <Button
@@ -297,7 +333,7 @@ function App() {
           color="secondary"
           variant="contained"
           onClick={() => setGamefieldAndWinnerStatus()}
-          style={buttonStyle}
+          style={buttonStyle1}
         >
           Reset
         </Button>
